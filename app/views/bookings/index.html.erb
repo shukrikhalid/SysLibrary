@@ -1,0 +1,7 @@
+<h1>Bookings#index</h1>
+<%= link_to 'Add booking', new_book_booking_path(@book) %>
+<% @booking.each do |booking| %>
+<br>booking date : <%= booking.booking_date_start %>
+<% end %>
+<br>
+<%= link_to 'Back',controller: 'books'%>
