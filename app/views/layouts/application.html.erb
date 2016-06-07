@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SysLibrary</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <title>RubySource User Auth</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<!-- Header -->
+  	<div class="tm-header">
+  		<div class="container">
+  			<div class="row">
+  				<div class="col-lg-5 col-md-4 col-sm-3 tm-site-name-container">
+  					<a href="#" class="tm-site-name">
+  						<%unless session[:user_id]%>
+  							Library
+  						<%else%>
+  							Welcome <%=@current_user.user_name%>
+  						<%end%>
+  					</a>	
+  				</div>
+	  			<div class="">
+	  				<div class="mobile-menu-icon">
+		              <i class="fa fa-bars"></i>
+		            </div>
+	  				<nav class="tm-nav">
+						<ul>
+							<%unless session[:user_id]%>
+								<ul class="nav">
+									<li><%= link_to :Signup , :signup, class: "nav_links"%></li>
+									<li><%= link_to :Login , :login, class: "nav_links"%></li>	
+								</ul>
+							<%else%>
+								<ul class="nav">
+									<li><%= link_to :Home , :home, class: "nav_links" %> </li>
+									<li><%= link_to :Profile , :profile, class: "nav_links" %> </li>
+									<li><%= link_to :Setting , :setting, class: "nav_links" %> </li>
+									<li><%= link_to :Logout , :logout, class: "nav_links" %></li>	
+								</ul>
+							<%end%>
+						</ul>
+					</nav>		
+	  			</div>				
+  			</div>
+  		</div>	  	
+  	</div>
+	<% if flash[:color]== "valid" %>
+		<div class="valid_notice">
+			<p><%= flash[:notice]%></p>
+		</div>
+	<% elsif flash[:color]== "invalid"%>
+		<div class="invalid_notice">
+			<p><%=flash[:notice]%></p>
+		</div>
+	<%else%>
+		<div class="notice">
+			<p><%=flash[:notice]%></p>
+		</div>
+	<%end%>
 <%= yield %>
 
 </body>

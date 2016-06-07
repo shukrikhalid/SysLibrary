@@ -1,9 +1,41 @@
 Rails.application.routes.draw do
+  get 'sessions/home'
+
+  get 'sessions/login'
+
+  get 'sessions/profile'
+
+  get 'sessions/setting'
+
+  get 'users/index'
+
+  get 'users/edit'
+
+  get 'users/new'
+
+  get 'users/show'
+
   get 'bookings/index'
 
-  resources :books do
-    resources :bookings
-  end
+  resources :sessions 
+    resources :books do
+      resources :bookings
+    end
+    
+    resources :users do
+      resources :bookings
+    end
+  
+  
+  root 'sessions#login'
+  get :sessions, to: "sessions/login_attempt", as: :login_attempt
+  post ':controller(/:action(/:id))(.:format)'
+  get "signup", :to => "users#new"
+  get "login", :to => "sessions#login"
+  get "logout", :to => "sessions#logout"
+  get "home", :to => "sessions#home"
+  get "profile", :to => "sessions#profile"
+  get "setting", :to => "sessions#setting"
   get 'books/index'
 
   get 'books/edit'

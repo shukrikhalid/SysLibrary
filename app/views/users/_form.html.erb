@@ -1,0 +1,54 @@
+<%= form_for @user do |f| %>
+ 
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@user.errors.count, "error") %> prohibited
+        this user from being saved:
+      </h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :user_ic %><br>
+    <%= f.text_field :user_ic %>
+  </p>
+ 
+  <p>
+    <%= f.label :user_name %><br>
+    <%= f.text_field :user_name %>
+  </p>
+  <p>
+    <%= f.label :user_email %><br>
+    <%= f.text_field :user_email %>
+  </p>
+  <p>
+    <%= f.label :password %><br>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <p>
+    <strong>User Type</strong><br>
+    <%= f.select :user_level, options_for_select([["Select user type"],"student","staff"]) %>
+  </p>
+  <p>
+    <%= f.label :user_address %><br>
+    <%= f.text_field :user_address %>
+  </p>
+  <p>
+    <%= f.label :user_contact %><br>
+    <%= f.text_field :user_contact %>
+  </p> 
+  <p>
+    <%= f.submit %>
+  </p>
+ 
+<% end %>

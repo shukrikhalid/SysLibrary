@@ -1,21 +1,28 @@
 class BooksController < ApplicationController
     def index
+      @current_user = User.find session[:user_id]
       @books = Book.all
     end
    
     def show
+      @current_user = User.find session[:user_id]
       @book = Book.find(params[:id])
     end
    
     def new
+      @current_user = User.find session[:user_id]
+      
       @book = Book.new
     end
    
     def edit
+      #@current_user = User.find_by_id("1")
+      @current_user = User.find session[:user_id]
       @book = Book.find(params[:id])
     end
    
     def create
+      @current_user = User.find session[:user_id]
       @book = Book.new(book_params)
    
       if @book.save
@@ -26,6 +33,7 @@ class BooksController < ApplicationController
     end
    
     def update
+      @current_user = User.find session[:user_id]
       @book = Book.find(params[:id])
    
       if @book.update(book_params)
@@ -36,14 +44,11 @@ class BooksController < ApplicationController
     end
    
     def destroy
+      @current_user = User.find session[:user_id]
       @book = Book.find(params[:id])
       @book.destroy
    
       redirect_to books_path
-    end
-
-    def haha
-      @book = Book.new
     end
    
     private
