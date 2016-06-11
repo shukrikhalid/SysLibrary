@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160605071845) do
+ActiveRecord::Schema.define(version: 20160610131841) do
 
   create_table "bookings", force: :cascade do |t|
     t.date     "booking_date_start"
@@ -38,6 +38,17 @@ ActiveRecord::Schema.define(version: 20160605071845) do
     t.datetime "updated_at",               null: false
   end
 
+  create_table "fines", force: :cascade do |t|
+    t.float    "fines_amount",   limit: 24
+    t.string   "fines_status",   limit: 255
+    t.date     "fines_date_pay"
+    t.integer  "booking_id",     limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "fines", ["booking_id"], name: "index_fines_on_booking_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "user_ic",         limit: 255
     t.string   "user_name",       limit: 255
@@ -52,4 +63,5 @@ ActiveRecord::Schema.define(version: 20160605071845) do
 
   add_foreign_key "bookings", "books"
   add_foreign_key "bookings", "users"
+  add_foreign_key "fines", "bookings"
 end

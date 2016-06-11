@@ -28,6 +28,12 @@ gem 'validates_overlap'
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', :require => 'bcrypt'
 
+gem 'bootstrap-sass'
+
+gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails',
+                              :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
+
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

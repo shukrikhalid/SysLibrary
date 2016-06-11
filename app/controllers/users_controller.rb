@@ -28,6 +28,8 @@ class UsersController < ApplicationController
       #if user.save
    	  if @user.save
         #redirect_to users_path
+        flash[:notice] = "Thanks you #{@user.user_name}. You have been sign up. Now you can login."
+        flash[:color]= "valid"
         redirect_to sessions_login_path
       else
         render 'new'

@@ -1,26 +1,13 @@
-<script>
-
-  $(document).ready(function() {
-$( "#order_booking_date_start" ).datepicker({
-      //defaultDate: "+1w",
-      minDate:"today",
-      dateFormat: "yy-mm-dd",
-      changeMonth: true,
-      numberOfMonths: 3,
-      onSelect: function( selectedDate ) {
-        $( "input.datepicker" ).datepicker( "option", "minDate", selectedDate );
-      }
-    });    
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker();
   });
-
-  $('input#date_field').datepicker();
-  </script>
-  
+</script>
 
 <%= form_for([@book, @book.bookings.build]) do |f| %>
   <p>
     <%= f.label :booking_date_start %><br>
-    <%= f.text_field :booking_date_start, required: "required", :placeholder => "YYYY-MM-DD" %>
+    <%= f.text_field :booking_date_start, required: "required", :placeholder => "YYYY-MM-DD", class: "" %>
     <%= f.hidden_field :booking_date_end, value: ""  %> 
   </p>
   <p>

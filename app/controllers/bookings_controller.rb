@@ -16,8 +16,21 @@ class BookingsController < ApplicationController
    	#bookingN.booking_date_start = "#{booking_params[:booking_date_start]}"
    	#bookingN.booking_date_end =	"#{booking_params[:booking_date_start]}"
    	#bookingN.save
-   	@booking = @book.bookings.create(booking_date_start: "#{booking_params[:booking_date_start]}" ,booking_date_end: "#{booking_params[:booking_date_start]}", user_id: "#{@current_user.id}", status: "booking")
-    	redirect_to book_bookings_path(@book)
+    sql = "SELECT *
+              FROM bookings
+              WHERE bookings.book_id = '#{@book.id}'
+              AND bookings.status LIKE 'booking'"
+        checkB = ActiveRecord::Base.connection.execute(sql)
+        countB = checkB.count
+    if countB > 0
+          flash[:notice] = "Invalid. You cannot booking same book."
+          flash[:color]= "invalid"
+    else
+        flash[:notice] = "Your booking is successful."
+        flash[:color]= "valid"
+   	    @booking = @book.bookings.create(booking_date_start: "#{booking_params[:booking_date_start]}" ,booking_date_end: "#{booking_params[:booking_date_start]}", user_id: "#{@current_user.id}", status: "booking")
+    end
+    redirect_to book_bookings_path(@book)
   end
  
   def destroy

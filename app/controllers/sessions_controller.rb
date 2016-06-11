@@ -30,6 +30,7 @@ class SessionsController < ApplicationController
 		if authorized_user
 			session[:user_id] = authorized_user.id
 			flash[:notice] = "Wow Welcome again, you logged in as #{authorized_user.user_name}"
+			flash[:color]= "valid"
 			redirect_to(:action => 'home')
 
 

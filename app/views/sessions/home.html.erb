@@ -1,3 +1,6 @@
 <h2 class='User_Header'><%=@current_user.user_name%> Home <h2>
  new_session_book
  <%= link_to 'book' , books_path(@books) %>
+ <br>
+ Librarian : 
+ <%= link_to 'Librarian' , librarians_index_path %>

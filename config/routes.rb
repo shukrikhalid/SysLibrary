@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'librarians/index'
+  get 'librarians/borrow'
+  get 'librarians/return'
+
   get 'sessions/home'
 
   get 'sessions/login'
@@ -17,7 +21,9 @@ Rails.application.routes.draw do
 
   get 'bookings/index'
 
-  resources :sessions 
+
+  resources :sessions
+  resources :librarians 
     resources :books do
       resources :bookings
     end

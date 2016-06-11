@@ -11,19 +11,8 @@
 // about supported directives.
 //
 //= require jquery
+//= require bootstrap-datepicker
+//= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-
-  $(document).on("page:load ready", function() {
-$( "input.datepicker" ).datepicker({
-      //defaultDate: "+1w",
-      minDate:"today",
-      dateFormat: "yy-mm-dd",
-      changeMonth: true,
-      numberOfMonths: 3,
-      onSelect: function( selectedDate ) {
-        $( "input.datepicker" ).datepicker( "option", "minDate", selectedDate );
-      }
-    });    
-  });

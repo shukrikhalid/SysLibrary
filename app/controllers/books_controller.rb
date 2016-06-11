@@ -2,6 +2,16 @@ class BooksController < ApplicationController
     def index
       @current_user = User.find session[:user_id]
       @books = Book.all
+      
+      if (params[:searchISBN].present?)
+        @books = Book.searchISBN(params[:searchISBN])
+      end
+      if (params[:searchName].present?)
+        @books = Book.searchName(params[:searchName])
+      end
+      if (params[:searchAuthor].present?)
+        @books = Book.searchAuthor(params[:searchAuthor])
+      end
     end
    
     def show

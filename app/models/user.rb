@@ -35,6 +35,12 @@ class User < ActiveRecord::Base
     def match_password(password="")
       password_digest == BCrypt::Engine.hash_secret(password)
     end
+
+    def self.searchStu(search)
+      if search
+        where(["user_ic LIKE ?","%#{search}%"])
+      end
+    end
   
 
 end

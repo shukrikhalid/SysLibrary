@@ -7,51 +7,50 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
 <!-- Header -->
-  	<div class="tm-header">
-  		<div class="container">
-  			<div class="row">
-  				<div class="col-lg-5 col-md-4 col-sm-3 tm-site-name-container">
-  					<a href="#" class="tm-site-name">
-  						<%unless session[:user_id]%>
-  							Library
-  						<%else%>
-  							Welcome <%=@current_user.user_name%>
-  						<%end%>
-  					</a>	
-  				</div>
-	  			<div class="">
-	  				<div class="mobile-menu-icon">
-		              <i class="fa fa-bars"></i>
-		            </div>
-	  				<nav class="tm-nav">
-						<ul>
-							<%unless session[:user_id]%>
-								<ul class="nav">
-									<li><%= link_to :Signup , :signup, class: "nav_links"%></li>
-									<li><%= link_to :Login , :login, class: "nav_links"%></li>	
-								</ul>
-							<%else%>
-								<ul class="nav">
-									<li><%= link_to :Home , :home, class: "nav_links" %> </li>
-									<li><%= link_to :Profile , :profile, class: "nav_links" %> </li>
-									<li><%= link_to :Setting , :setting, class: "nav_links" %> </li>
-									<li><%= link_to :Logout , :logout, class: "nav_links" %></li>	
-								</ul>
-							<%end%>
-						</ul>
-					</nav>		
-	  			</div>				
-  			</div>
-  		</div>	  	
-  	</div>
+	 <nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Library</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <%unless session[:user_id]%>
+	      	
+	      		<li><%= link_to :Profile , :profile, class: "nav_links" %> </li>
+	      		<li><%= link_to :Setting , :setting, class: "nav_links" %> </li>
+	      	
+	      <%else%>
+	      	
+	      		<li><%= link_to :Home , :home, class: "nav_links" %> </li>
+	      		<li><%= link_to :Profile , :profile, class: "nav_links" %> </li>
+	      		<li><%= link_to :Setting , :setting, class: "nav_links" %> </li>	
+	      	
+	      <%end%>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	    	<%unless session[:user_id]%>
+	    		<li><%= link_to " SignUp" , :signup, class: "glyphicon glyphicon-user"%></li>
+	    		<li><%= link_to " LogIn" , :login, class: "glyphicon glyphicon-log-in"%></li>
+	    	<%else%>
+	    		<li><a href="#"><span class="glyphicon glyphicon-user"></span>Welcome <%=@current_user.user_name%></a></li>
+	    		<li><%= link_to " LogOut" , :logout, class: "glyphicon glyphicon-log-out" %></li>
+	    	<%end%>
+	    </ul>
+	  </div>
+	</nav>
+
 	<% if flash[:color]== "valid" %>
-		<div class="valid_notice">
-			<p><%= flash[:notice]%></p>
+		<div class="panel panel-success">
+			<div class="panel-heading">
+			<p align="center"><%= flash[:notice]%></p>
+			</div>
 		</div>
 	<% elsif flash[:color]== "invalid"%>
-		<div class="invalid_notice">
-			<p><%=flash[:notice]%></p>
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+			<p align="center"><%=flash[:notice]%></p>
+			</div>
 		</div>
 	<%else%>
 		<div class="notice">
