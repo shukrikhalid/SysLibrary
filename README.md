@@ -1,8 +1,10 @@
 == README
 need install
+
 ``` ruby
-sudo apt-get install imagemagick
+gem 'bootstrap-datepicker-rails'
 ```
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
