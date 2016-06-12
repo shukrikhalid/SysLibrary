@@ -33,7 +33,7 @@
       <td><%= book.book_author %></td>
       <td><%= book.book_status %></td>
       <td><%= book.book_edition %></td>
-      <td><%= book.book_image %></td>
+      <td><%= image_tag book.book_image.thumb.url %></td>
 
       <td><%= link_to 'Booking', book_bookings_path(book), class:"btn btn-success" %></td>
       <td><%= link_to 'Show', book_path(book) , class:"btn btn-info" %></td>

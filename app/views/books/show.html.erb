@@ -1,1 +1,32 @@
-xde
+<p>
+  <strong>Isbn:</strong>
+  <%= @book.book_isbn %>
+</p>
+ 
+<p>
+  <strong>Title:</strong>
+  <%= @book.book_title %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @book.book_author %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @book.book_status %>
+</p>
+
+<p>
+  <strong>Edition:</strong>
+  <%= @book.book_edition %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @book.book_image.medium.url %>
+</p>
+
+<%= link_to 'Edit', edit_book_path(@book) , class:"btn btn-warning" %>
+<%= link_to 'Back', books_path %>
