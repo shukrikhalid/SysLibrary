@@ -1,7 +1,13 @@
   <div class="panel panel-default">
     <div class="panel-body">
-   <h1>Users#show</h1>
-   <p>Find me in app/views/users/show.html.erb</p>
- 
+    	<br>ic: <%= @user.user_ic %>
+    	<br>name: <%= @user.user_name %>
+    	<br>email: <%= @user.user_email %>
+    	<br>level: <%= @user.user_level %>
+    	<br>address: <%= @user.user_address %>
+    	<br>contact: <%= @user.user_contact %>
+
+    	<br><%= link_to 'Edit', edit_user_path(@user) %>
+    	<br><%= link_to 'Back', users_path %>
     </div>
   </div>
