@@ -13,10 +13,7 @@ class LibrariansController < ApplicationController
 
     @borrow = Booking.where(["user_id LIKE ? and status LIKE ?","#{@user.id}","borrow"])
   	
-  	@all = Booking.all 
-  	@fine = Fine.find_by(fines_status: "notpay")
-  	
-  	@fineB = Booking.where(["user_id LIKE ? and id LIKE ?","#{@user.id}","#{@fine.fines_status}"])
+  	@return = Booking.where(["user_id LIKE ? and status LIKE ?","#{@user.id}","return"])
 
   end
   def borrow
@@ -62,6 +59,21 @@ class LibrariansController < ApplicationController
    		booking.update(status: "return", booking_date_return: "#{current_date}")
     
 		redirect_to librarian_path(@user)
+  end
+
+  def pay
+  	@current_user = User.find session[:user_id]
+  	@user = User.find(params[:format])
+  	current_date = Time.now.strftime("%Y-%m-%d")
+  	
+  	@fine = Fine.find_by(fines_status: "notpay", booking_id: params[:booking_id])
+  	@fine.update(fines_date_pay: "#{current_date}",fines_status: "pay" )
+
+    flash[:notice] = "Payment Success."
+	flash[:color]= "valid"
+   		
+
+	redirect_to librarian_path(@user)
   end
 
 end

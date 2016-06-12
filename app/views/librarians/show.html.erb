@@ -64,38 +64,46 @@ BORROW
 </table>
 /////////////////////////////////////////////////////////////
 Fines
+<% @return.each do |booking| %>
 <table class="table">
-<% @fineB.each do |booking| %>
-<tr>
-<td>borrow date : <%= booking.booking_date_start %></td>
-<td>end date : <%= booking.booking_date_end %></td>
-<td>return date : <%= booking.booking_date_return %></td>
-</tr>
-<tr>
-<% sql = "SELECT datediff('#{booking.booking_date_return}','#{booking.booking_date_end}' ) AS DAY;"
-    checkDate = ActiveRecord::Base.connection.select_value(sql) %>
-<td>Late <%= "#{chectDate}"%> day * RM 0.5</td>
-<td>Total RM <%= "#{@fine.fines_amount}"%></td>
-</tr>
-<tr>
-<td>
-<% @book = Book.where(["id LIKE ?","#{booking.book_id}"]) %>
-<% @book.each do |book| %>
-    
-      <br>ISBN : <%= book.book_isbn %>
-      <br>Title : <%= book.book_title %>
-      <br>Author : <%= book.book_author %>
-      <br>Status : <%= book.book_status %>
-      <br>Edition : <%= book.book_edition %>
-      <br>Image : <%= book.book_image %>
-    
-<% end %>  
-<br><%= link_to 'return', librarians_return_path(@user.id,booking_id: "#{booking.id}")%>
-</td>
-<td></td>
-</tr>
-<% end %>
-</table>
-<br>
+<% @fine = Fine.find_by(fines_status: "notpay", booking_id: "#{booking.id}") %>
+<% if "#{@fine}".present?%>
+	<tr>
+	<td>borrow date : <%= booking.booking_date_start %></td>
+	<td>end date : <%= booking.booking_date_end %></td>
+	<td>return date : <%= booking.booking_date_return %></td>
+	</tr>
+	<tr>
+	<% 
+		sql = "SELECT datediff('#{booking.booking_date_return}','#{booking.booking_date_end}' ) AS DAY;"
+	    checkDate = ActiveRecord::Base.connection.select_value(sql) 
+	    %>
+	<td>Late <%= "#{checkDate}"%> day * RM 0.5</td>
+	<td>Total RM <%= "#{@fine.fines_amount}"%></td>
+	</tr>
+	<tr>
+	<td>
+	<% @book = Book.where(["id LIKE ?","#{booking.book_id}"]) %>
+	<% @book.each do |book| %>
+	    
+	      <br>ISBN : <%= book.book_isbn %>
+	      <br>Title : <%= book.book_title %>
+	      <br>Author : <%= book.book_author %>
+	      <br>Status : <%= book.book_status %>
+	      <br>Edition : <%= book.book_edition %>
+	      <br>Image : <%= book.book_image %>
+	    
+	<% end %>  
+	<br><%= link_to 'pay', librarians_pay_path(@user.id,booking_id: "#{booking.id}") ,
+					method: :pay,
+                    data: { confirm: 'Do payment?' }%>
+	</td>
+	<td></td>
+	</tr>
 
-<%= link_to 'pay'%>
+<%else%>
+<%end%>
+
+</table>
+<% end %>
+<br>

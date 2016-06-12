@@ -1,5 +1,5 @@
 <h1>Listing books</h1>
- <%= link_to 'New book', new_book_path %>
+ <%= link_to 'New book', new_book_path, class:"btn btn-primary" %>
 
 
 
@@ -35,12 +35,16 @@
       <td><%= book.book_edition %></td>
       <td><%= book.book_image %></td>
 
-      <td><%= link_to 'Show', book_path(book) %></td>
-      <td><%= link_to 'Edit', edit_book_path(book) %></td>
+      <td><%= link_to 'Booking', book_bookings_path(book), class:"btn btn-success" %></td>
+      <td><%= link_to 'Show', book_path(book) , class:"btn btn-info" %></td>
+      
+      <% if "#{@current_user.user_level}".eql?"staff librarian"%>
+      <td><%= link_to 'Edit', edit_book_path(book) , class:"btn btn-warning" %></td>
       <td><%= link_to 'Destroy', book_path(book),
                     method: :delete,
-                    data: { confirm: 'Are you sure?' } %></td>
-      <td><%= link_to 'Booking', book_bookings_path(book) %></td>
+                    data: { confirm: 'Are you sure?' }, class:"btn btn-danger"  %></td>
+      <%end%>
+      
     </tr>
   <% end %>
 </table>

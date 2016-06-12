@@ -1,13 +1,65 @@
 <!DOCTYPE html>
 <html>
+<style>
+body {
+    font-family: "Lato", sans-serif;
+    background-image: url("/assets/libraryBg.jpg");
+    background-color: #404040;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    
+    color: #ffffff;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #ffff00;
+}
+
+.closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 20px !important;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+</style>
 <head>
-  <title>RubySource User Auth</title>
+  <title>Library</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+	<div id="main">
 <!-- Header -->
 	 <nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
@@ -40,24 +92,80 @@
 	  </div>
 	</nav>
 
-	<% if flash[:color]== "valid" %>
-		<div class="panel panel-success">
-			<div class="panel-heading">
-			<p align="center"><%= flash[:notice]%></p>
-			</div>
-		</div>
-	<% elsif flash[:color]== "invalid"%>
-		<div class="panel panel-danger">
-			<div class="panel-heading">
-			<p align="center"><%=flash[:notice]%></p>
-			</div>
-		</div>
-	<%else%>
-		<div class="notice">
-			<p><%=flash[:notice]%></p>
-		</div>
-	<%end%>
-<%= yield %>
+	
+	<div id="mySidenav" class="sidenav" style="background: rgba(122, 130, 136, 0.7)!important;">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Close <span class="glyphicon glyphicon-remove-circle"></span></a>
 
+		<h2><span class="label label-default">Librarian</span></h2>
+		<table class="table">
+		<tr><td>
+			<%= link_to 'User Management' , librarians_index_path, class: "btn btn-info btn-block" %>
+			 <button type="button" class="btn btn-default btn-block">Default</button>
+			<button type="button" class="btn btn-primary btn-block">Primary</button>
+			<button type="button" class="btn btn-success btn-block">Success</button>
+			<button type="button" class="btn btn-info btn-block">Info</button>
+			<button type="button" class="btn btn-warning btn-block">Warning</button>
+			<button type="button" class="btn btn-danger btn-block">Danger</button>
+			<button type="button" class="btn btn-link btn-block">Link</button>
+		</td></tr>	
+		</table>
+		 
+
+	  
+	  <a href="#">About</a>
+	  <a href="#">Services</a>
+
+	</div>
+	<%unless session[:user_id]%>
+	<%else%>
+		<% if "#{@current_user.user_level}".eql?"student librarian" or "#{@current_user.user_level}".eql?"staff librarian"%>
+		<button type="button" class="btn btn-info">
+			<span style="cursor:pointer" onclick="openNav()">☰ Librarian Navigation</span>	
+		</button>
+		<%end%>
+	
+	<%end%>
+<!--
+	<div class="panel panel-default" style="background: rgba(122, 130, 136, 0.9)!important;">
+-->
+	<div class="panel panel-default">
+	  <div class="panel-body">
+
+		<% if flash[:color]== "valid" %>
+			<div class="alert alert-success">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<p align="center"> <strong><%= flash[:notice]%> </strong></p>
+				
+			</div>
+		<% elsif flash[:color]== "invalid"%>
+			<div class="alert alert-danger">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<p align="center"> <strong><%=flash[:notice]%> </strong></p>
+				
+			</div>
+		<%else%>
+			<div class="notice">
+				<p><%=flash[:notice]%></p>
+			</div>
+		<%end%>	  	
+
+	  	<div class="container">
+	  		<%= yield %>	  			
+		</div>
+	  </div>
+	</div>
+	  
+	</div>
+	<script>
+	function openNav() {
+	    document.getElementById("mySidenav").style.width = "250px";
+	    document.getElementById("main").style.marginLeft = "250px";
+	}
+
+	function closeNav() {
+	    document.getElementById("mySidenav").style.width = "0";
+	    document.getElementById("main").style.marginLeft= "0";
+	}
+	</script>
 </body>
 </html>

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'librarians/index'
   get 'librarians/borrow'
   get 'librarians/return'
+  get 'librarians/pay'
 
   get 'sessions/home'
 
