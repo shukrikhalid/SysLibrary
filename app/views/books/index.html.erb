@@ -1,30 +1,30 @@
-<h1>Listing books</h1>
- <%= link_to 'New book', new_book_path, class:"btn btn-primary" %>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h1>Listing books</h1>
+       <%= link_to 'New book', new_book_path, class:"btn btn-primary" %>
 
 
 
-<table class="table">
-  <tr>
-  <%= form_tag books_path, :method => 'get' do%>
-    <td><%= text_field_tag :searchISBN, params[:searchISBN]%></td>
-    <td><%= text_field_tag :searchName, params[:searchName]%></td>
-    <td><%= text_field_tag :searchAuthor, params[:searchAuthor]%></td>
-    <td colspan="7"><%= submit_tag "Search"%></td>
-    
-  <% end %>
-  </tr>
+      <table class="table">
+        <tr>
+        <%= form_tag books_path, :method => 'get' do%>
+          <td><%= text_field_tag :searchISBN, params[:searchISBN]%></td>
+          <td><%= text_field_tag :searchName, params[:searchName]%></td>
+          <td><%= text_field_tag :searchAuthor, params[:searchAuthor]%></td>
+          <td colspan="7"><%= submit_tag "Search"%></td>
+          
+        <% end %>
+        </tr>
 
-  <tr>
-    <th>ISBN</th>
-    <th>Title</th>
-    <th>Author</th>
-    <th>Status</th>
-    <th>Edition</th>
-    <th>Image</th>
-    <th colspan="4"></th>
-  </tr>
-
-
+        <tr>
+          <th>ISBN</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Status</th>
+          <th>Edition</th>
+          <th>Image</th>
+          <th colspan="4"></th>
+        </tr>
  
   <% @books.each do |book| %>
     <tr>
@@ -33,18 +33,20 @@
       <td><%= book.book_author %></td>
       <td><%= book.book_status %></td>
       <td><%= book.book_edition %></td>
-      <td><%= book.book_image %></td>
+      <td><%= image_tag book.book_image.thumb.url %></td>
 
-      <td><%= link_to 'Booking', book_bookings_path(book), class:"btn btn-success" %></td>
-      <td><%= link_to 'Show', book_path(book) , class:"btn btn-info" %></td>
-      
-      <% if "#{@current_user.user_level}".eql?"staff librarian"%>
-      <td><%= link_to 'Edit', edit_book_path(book) , class:"btn btn-warning" %></td>
-      <td><%= link_to 'Destroy', book_path(book),
-                    method: :delete,
-                    data: { confirm: 'Are you sure?' }, class:"btn btn-danger"  %></td>
-      <%end%>
-      
-    </tr>
-  <% end %>
-</table>
+            <td><%= link_to 'Booking', book_bookings_path(book), class:"btn btn-success" %></td>
+            <td><%= link_to 'Show', book_path(book) , class:"btn btn-info" %></td>
+            
+            <% if "#{@current_user.user_level}".eql?"staff librarian"%>
+            <td><%= link_to 'Edit', edit_book_path(book) , class:"btn btn-warning" %></td>
+            <td><%= link_to 'Destroy', book_path(book),
+                          method: :delete,
+                          data: { confirm: 'Are you sure?' }, class:"btn btn-danger"  %></td>
+            <%end%>
+            
+          </tr>
+        <% end %>
+      </table>    
+    </div>
+  </div>
