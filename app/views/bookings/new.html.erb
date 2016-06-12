@@ -1,14 +1,40 @@
-  <script type="text/javascript">
+<script type="text/javascript">
   $(document).ready(function(){
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({ 
+      format:'yyyy-mm-dd',
+      startDate: "tomorrow" 
+     }).val();
+    $('.datepicker').change(function() { getdate(); });
+
   });
 </script>
 
+<script type="text/javascript">
+
+
+
+function getdate() {
+    var tt =  document.getElementById('booking').value;
+
+    var date = new Date(tt);
+    var newdate = new Date(date);
+
+    newdate.setDate(newdate.getDate() + 7);
+    
+    var dd = newdate.getDate();
+    var mm = newdate.getMonth() + 1;
+    var y = newdate.getFullYear();
+
+    var someFormattedDate = y + '-' + mm + '-' + dd;
+    var x=new Date(someFormattedDate).toISOString().split('T')[0];
+    document.getElementById('end_Date').value = x;
+}
+</script>
 <%= form_for([@book, @book.bookings.build]) do |f| %>
   <p>
     <%= f.label :booking_date_start %><br>
-    <%= f.text_field :booking_date_start, required: "required", :placeholder => "YYYY-MM-DD", class: "" %>
-    <%= f.hidden_field :booking_date_end, value: ""  %> 
+    <%= f.text_field :booking_date_start, required: "required", :placeholder => "YYYY-MM-DD", class: "datepicker",id:'booking' %>
+    <%= f.hidden_field :booking_date_end, id:'end_Date'  %> 
   </p>
   <p>
     <%= f.submit %>
