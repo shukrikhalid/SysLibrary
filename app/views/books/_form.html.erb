@@ -14,34 +14,72 @@
     </div>
   <% end %>
 
-  <p>
-    <%= f.label :book_isbn %><br>
-    <%= f.text_field :book_isbn %>
-  </p>
- 
-  <p>
-    <%= f.label :book_title %><br>
-    <%= f.text_field :book_title %>
-  </p>
-  <p>
-    <%= f.label :book_author %><br>
-    <%= f.text_field :book_author %>
-  </p>
-  <p>
-    <%= f.label :book_status %><br>
-    <%= f.text_field :book_status %>
-  </p>
-  <p>
-    <%= f.label :book_edition %><br>
-    <%= f.text_field :book_edition %>
-  </p>
-  <p>
-    <%= f.label :book_image %><br>
-    <%= f.file_field :book_image %>
-  </p>
- 
-  <p>
-    <%= f.submit %>
-  </p>
+  <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Book Form
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="col-lg-3">
+                                            <label>Book ISBN</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                            <%= f.text_field :book_isbn , class: "form-control", required: "required" %>
+                                            <p class="help-block"></p></div>
+                                        </div>
+                                        <div class="form-group">
+                                        <div class="col-lg-3">
+                                            <label>Book Title</label></div>
+                                            <div class="col-lg-8">
+                                            <%= f.text_field :book_title , class: "form-control", required: "required" %>
+                                            <p class="help-block"></p></div>
+                                        </div>
+                                        <div class="form-group">
+                                        <div class="col-lg-3">
+                                            <label>Book Author</label></div>
+                                            <div class="col-lg-8">
+                                            <%= f.text_field :book_author , class: "form-control", required: "required" %>
+                                            <p class="help-block"></p></div>
+                                        </div>
+                                        <div class="form-group">
+                                        <div class="col-lg-3">
+                                            <label>Book Status</label></div>
+                                            <div class="col-lg-8">
+                                            <%= f.text_field :book_status , class: "form-control", required: "required" %>
+                                            <p class="help-block"></p></div>
+                                        </div>
+                                        <div class="form-group">
+                                        <div class="col-lg-3">
+                                            <label>Book Edition</label></div>
+                                            <div class="col-lg-8">
+                                            <%= f.text_field :book_edition , class: "form-control", required: "required" %>
+                                            <p class="help-block"></p></div>
+                                        </div>
+                                        <div class="form-group">
+                                        <div class="col-lg-3">
+                                            <label>Book Image</label></div>
+                                            <div class="col-lg-8">
+                                            <%= f.file_field :book_image , required: "required"%>
+                                            <p class="help-block"></div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                          <div class="col-lg-5">
+                            <%= f.submit "Submit", class: "btn btn-success" %>
+                            <%= submit_tag 'Cancel', :type => :reset, class: "btn btn-danger" %>
+                          </div>
+                          </div>
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                               
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
  
 <% end %>
