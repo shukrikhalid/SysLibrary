@@ -1,13 +1,43 @@
-  <div class="panel panel-default">
-    <div class="panel-body">
-    	<br>ic: <%= @user.user_ic %>
-    	<br>name: <%= @user.user_name %>
-    	<br>email: <%= @user.user_email %>
-    	<br>level: <%= @user.user_level %>
-    	<br>address: <%= @user.user_address %>
-    	<br>contact: <%= @user.user_contact %>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            User Information
+                        </div>
+                        <div class="panel-body">
+                                    <table class="table">
+                                    <tr>
+                                        <td align="right"><strong>User IC</strong> </td>
+                                         <td>:</td>
+                                        <td><%= @user.user_ic %></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><strong>User Name</td>
+                                        <td>:</td>
+                                        <td><%= @user.user_name %></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><strong>User Email</td>
+                                        <td>:</td>
+                                        <td><%= @user.user_email %></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><strong>User Type</td>
+                                        <td>:</td>
+                                        <td><%= @user.user_level %></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><strong>User Address</td>
+                                        <td>:</td>
+                                        <td><%= @user.user_address %></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><strong>User Contact</td>
+                                        <td>:</td>
+                                        <td><%= @user.user_contact %></td>
+                                    </tr>
+                                    </table>
+                                </div>
+                                <%= link_to 'Edit', edit_user_path(@user) , class:"btn btn-warning" %>
+                                <%= link_to 'Back', users_path %>
 
-    	<br><%= link_to 'Edit', edit_user_path(@user) %>
-    	<br><%= link_to 'Back', users_path %>
-    </div>
-  </div>
+                    </div>
+    	
