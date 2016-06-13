@@ -1,32 +1,39 @@
-<p>
-  <strong>Isbn:</strong>
-  <%= @book.book_isbn %>
-</p>
- 
-<p>
-  <strong>Title:</strong>
-  <%= @book.book_title %>
-</p>
 
-<p>
-  <strong>Author:</strong>
-  <%= @book.book_author %>
-</p>
+<div class="panel panel-primary">
+                        <div class="panel-heading">
+                            View Book
+                        </div>    
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                 <center><table border="0" style="width:100%">
+                                    <tr>
+                                        <th rowspan="6"><%= image_tag @book.book_image.medium.url %>
+                                    </tr>
+                                    <tr>
+                                        <td>ISBN : <%= @book.book_isbn %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Title : <%= @book.book_title %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Author : <%= @book.book_author %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status : <%= @book.book_status %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Edition : <%= @book.book_edition %></td>
+                                    </tr>
+                                    </table></center>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                               
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <%= link_to 'Edit', edit_book_path(@book) , class:"btn btn-warning" %>
+                        <%= link_to 'Back', books_path %>
+                        <!-- /.panel-body -->
+                    </div>
 
-<p>
-  <strong>Status:</strong>
-  <%= @book.book_status %>
-</p>
-
-<p>
-  <strong>Edition:</strong>
-  <%= @book.book_edition %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @book.book_image.medium.url %>
-</p>
-
-<%= link_to 'Edit', edit_book_path(@book) , class:"btn btn-warning" %>
-<%= link_to 'Back', books_path %>
