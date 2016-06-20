@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'homepage/main'
+
   get 'librarians/index'
   get 'librarians/borrow'
   get 'librarians/return'
