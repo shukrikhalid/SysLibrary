@@ -1,0 +1,34 @@
+  <div class="panel panel-info">
+    <div class="panel-heading"><h1>User Management</h1></div>
+    <div class="panel-body">
+    <h3>Listing users</h3>
+    <table class="table">
+      <tr>
+       <%= form_tag users_index_path, :method => 'get' do%>
+         <td>IC :<%= text_field_tag :searchStu, params[:searchStu]%></td>
+         <td colspan="7"><%= submit_tag "Search"%></td>
+         
+       <% end %>
+       </tr>
+      <tr>
+        <th>IC</th>
+        <th>Name</th>
+        <th>Level</th>
+        <th colspan="3"></th>
+      </tr>
+     
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.user_ic %></td>
+          <td><%= user.user_name %></td>
+          <td><%= user.user_level %></td>
+
+          <td><%= link_to 'Show', add_librarian_show_path(user), class:"btn btn-info" %></td>
+          <td><%= link_to 'Destroy', user_path(user),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %></td>
+        </tr>
+      <% end %>
+    </table>
+    </div>
+  </div>
