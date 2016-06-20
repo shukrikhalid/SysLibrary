@@ -1,7 +1,149 @@
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <!-- FormValidation CSS file -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.formvalidation/0.6.1/css/formValidation.min.css">
+
+<!-- FormValidation plugin and the class supports validating Bootstrap form -->
+<script src="//cdn.jsdelivr.net/jquery.formvalidation/0.6.1/js/formValidation.min.js"></script>
+<script src="//cdn.jsdelivr.net/jquery.formvalidation/0.6.1/js/framework/bootstrap.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+    $('#identicalForm').formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            confirmPassword: {
+                validators: {
+                    identical: {
+                        field: 'password',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+
+
+
+
   <div class="panel panel-default">
     <div class="panel-body">
-    <%= render 'form' %>
+    	
+    	<%= form_for @user,html: { id: "identicalForm", class: "form-horizontal"} do |f| %>
+    	 
+    	  <% if @user.errors.any? %>
+            <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    	    <div id="error_explanation">
+    	      <h2>
+    	        <%= pluralize(@user.errors.count, "error") %> prohibited
+    	        this user from being saved:
+    	      </h2>
+    	      <ul>
+    	        <% @user.errors.full_messages.each do |msg| %>
+    	          <li><%= msg %></li>
+    	        <% end %>
+    	      </ul>
+    	    </div>
+            </div>
+    	  <% end %>
+    	
 
-    <%= link_to 'Back', users_path %><br>
+    	  <div class="panel panel-primary">
+    	          <div class="panel-heading">
+    	              <h3>Sign Up</h3>
+    	          </div>    
+    	          <div class="panel-body">
+    	              <div class="row">
+    	                  <div class="col-lg-12">
+    	                      <form role="form">
+    	                          <div class="form-group">
+    	                              <div class="col-lg-3">
+    	                              <label>User IC</label>
+    	                              </div>
+    	                              <div class="col-lg-8">
+    	                              <%= f.text_field :user_ic , class: "form-control", required: "required" %>
+    	                              <p class="help-block"></p></div>
+    	                          </div>
+    	                          <div class="form-group">
+    	                          <div class="col-lg-3">
+    	                              <label>User Name</label></div>
+    	                              <div class="col-lg-8">
+    	                              <%= f.text_field :user_name , class: "form-control", required: "required" %>
+    	                              <p class="help-block"></p></div>
+    	                          </div>
+    	                          <div class="form-group">
+    	                          <div class="col-lg-3">
+    	                              <label>User Email</label></div>
+    	                              <div class="col-lg-8">
+    	                              <%= f.text_field :user_email , class: "form-control", required: "required" %>
+    	                              <p class="help-block"></p></div>
+    	                          </div>
+                                  <div class="form-group">
+    	                          <div class="col-lg-3">
+    	                              <label>Password</label></div>
+    	                              <div class="col-lg-8">
+    	                              <%= f.text_field :password , class: "form-control", required: "required", type:"password", name: "password" %>
+    	                              <p class="help-block"></p></div>
+    	                          </div>
+    	                          <div class="form-group">
+    	                          <div class="col-lg-3">
+    	                              <label>Password Confirmation</label></div>
+    	                              <div class="col-lg-8">
+    	                              <%= f.text_field :password_confirmation , class: "form-control", required: "required", type:"password", name: "confirmPassword" %>
+    	                              <p class="help-block"></p></div>
+    	                          </div>
+                                  <div class="form-group">
+    	                          <div class="col-lg-3">
+    	                              <label>User Type</label></div>
+    	                              <div class="col-lg-8">
+    	                              <%= f.select(:user_level, options_for_select(["student","staff"]), {}, {class: "form-control", required: "required", placeholder: "Select" }) %>
+    	                              <p class="help-block"></p>
+    	                              </div>
+    	                          </div>
+
+    	                          <div class="form-group">
+    	                          <div class="col-lg-3">
+    	                              <label>User Address</label></div>
+    	                              <div class="col-lg-8">
+    	                              <%= f.text_field :user_address , class: "form-control", required: "required" %>
+    	                              <p class="help-block"></p></div>
+    	                          </div>
+    	                          <div class="form-group">
+    	                          <div class="col-lg-3">
+    	                              <label>User Contact</label></div>
+    	                              <div class="col-lg-8">
+    	                              <%= f.text_field :user_contact , class: "form-control", required: "required" %>
+    	                              <p class="help-block"></p></div>
+    	                          </div>
+    	                          <div class="form-group">
+    	                          <div class="col-lg-5">
+    	                            <%= f.submit "Submit", class: "btn btn-success" %>
+    	                            
+    	                          </div>
+    	                          </div>
+    	                      </form>
+    	                  </div>
+    	                  <!-- /.col-lg-6 (nested) -->
+    	                 
+    	              </div>
+    	              <!-- /.row (nested) -->
+    	          </div>
+    	          <!-- /.panel-body -->
+    	      </div>
+    	      <!-- /.panel -->
+    	<% end %>
+        
+    <form><input class="btn btn-info" Type="button" VALUE="Back" onClick="history.go(-1);return true;"></input></form>
     </div>
   </div>

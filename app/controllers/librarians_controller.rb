@@ -21,19 +21,34 @@ class LibrariansController < ApplicationController
   	@user = User.find(params[:format])
     booking = Booking.find_by(id: params[:booking_id],user_id: "#{@user.id}", status: "booking")
     current_date = Time.now.strftime("%Y-%m-%d") 
-    if "#{booking.booking_date_start}".eql? current_date
-		flash[:notice] = "Borrow Success."
-		flash[:color]= "valid"
-		if booking.update(status: "borrow")
-		    redirect_to librarian_path(@user)
-		else
-		    render 'show'
-		end
+    
+    sql2 = "SELECT *
+              FROM bookings
+              WHERE bookings.book_id = '#{booking.book_id}'
+              AND bookings.status LIKE 'borrow'"
+        checkR = ActiveRecord::Base.connection.execute(sql2)
+        countR = checkR.count
+    if countR > 0
+          flash[:notice] = "Invalid. Sorry this book not been return yet."
+          flash[:color]= "invalid"
+          redirect_to librarian_path(@user)
     else
-		flash[:notice] = "Invalid. This booking for #{booking.booking_date_start}."
-    	flash[:color]= "invalid"
-		redirect_to librarian_path(@user)
+          if "#{booking.booking_date_start}".eql? current_date
+          flash[:notice] = "Borrow Success."
+          flash[:color]= "valid"
+          if booking.update(status: "borrow")
+              redirect_to librarian_path(@user)
+          else
+              render 'show'
+          end
+          else
+          flash[:notice] = "Invalid. This booking for #{booking.booking_date_start}."
+            flash[:color]= "invalid"
+          redirect_to librarian_path(@user)
+          end
     end
+
+    
   end
 
   def return
@@ -54,7 +69,7 @@ class LibrariansController < ApplicationController
     	flash[:color]= "invalid"
    	else
    		flash[:notice] = "Return Success."
-		flash[:color]= "valid"
+		  flash[:color]= "valid"
    	end
    		booking.update(status: "return", booking_date_return: "#{current_date}")
     
@@ -70,7 +85,7 @@ class LibrariansController < ApplicationController
   	@fine.update(fines_date_pay: "#{current_date}",fines_status: "pay" )
 
     flash[:notice] = "Payment Success."
-	flash[:color]= "valid"
+	  flash[:color]= "valid"
    		
 
 	redirect_to librarian_path(@user)

@@ -1,10 +1,7 @@
   <div class="panel panel-default">
     <div class="panel-body">
-    <h2><%=@current_user.user_name%> Home <h2>
-     new_session_book
-     <%= link_to 'book' , books_path(@books) %>
-     <br>
-     Librarian : 
-     <%= link_to 'Librarian' , librarians_index_path %>
+    <h2> Home <h2>
+     <%= link_to 'View Book' , books_path(@books), class:"btn btn-danger" %><br>
+     <%= link_to "View Profile", user_path(@current_user), class:"btn btn-info"%>
     </div>
   </div>

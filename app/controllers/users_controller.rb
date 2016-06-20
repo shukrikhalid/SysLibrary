@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
   def index
+      @current_user = User.find session[:user_id]
       @users = User.all
+      if (params[:searchStu].present?)
+        @users = User.searchStu(params[:searchStu])
+    end
     end
    
     def show
+      @current_user = User.find session[:user_id]
       @user = User.find(params[:id])
     end
    
@@ -12,6 +17,7 @@ class UsersController < ApplicationController
     end
    
     def edit
+      @current_user = User.find session[:user_id]
       @user = User.find(params[:id])
     end
    
@@ -40,7 +46,9 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
    
       if @user.update(user_params)
-        #redirect_to users_path
+        flash[:notice] = "Update successful"
+        flash[:color]= "valid"
+        redirect_to sessions_home_path
       else
         render 'edit'
       end
@@ -49,7 +57,8 @@ class UsersController < ApplicationController
     def destroy
       @user = User.find(params[:id])
       @user.destroy
-   
+      flash[:notice] = "Delete successful"
+      flash[:color]= "valid"
       redirect_to users_path
     end
    

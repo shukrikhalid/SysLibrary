@@ -1,8 +1,9 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <h1>Listing books</h1>
+      <% if "#{@current_user.user_level}".eql?"staff librarian"%>
        <%= link_to 'New book', new_book_path, class:"btn btn-primary" %>
-
+       <%end %>
 
 
       <table class="table">
@@ -35,7 +36,7 @@
       <td><%= book.book_edition %></td>
       <td><%= image_tag book.book_image.thumb.url %></td>
 
-            <td><%= link_to 'Booking', book_bookings_path(book), class:"btn btn-success" %></td>
+            <td><%= link_to 'Booking', book_bookings_path(book), class:"btn btn-success", method: :get%></td>
             <td><%= link_to 'Show', book_path(book) , class:"btn btn-info" %></td>
             
             <% if "#{@current_user.user_level}".eql?"staff librarian"%>

@@ -22,13 +22,22 @@ class BookingsController < ApplicationController
               AND bookings.status LIKE 'booking'"
         checkB = ActiveRecord::Base.connection.execute(sql)
         countB = checkB.count
+
     if countB > 0
           flash[:notice] = "Invalid. You cannot booking same book."
           flash[:color]= "invalid"
     else
-        flash[:notice] = "Your booking is successful."
-        flash[:color]= "valid"
-   	    @booking = @book.bookings.create(booking_date_start: "#{booking_params[:booking_date_start]}" ,booking_date_end: "#{booking_params[:booking_date_start]}", user_id: "#{@current_user.id}", status: "booking")
+        
+               bookingEnd = ("#{booking_params[:booking_date_start]}".to_datetime + 7.days)
+                @booking = @book.bookings.create(booking_date_start: "#{booking_params[:booking_date_start]}" ,booking_date_end: "#{bookingEnd}", user_id: "#{@current_user.id}", status: "booking")
+               if @booking.save
+                 flash[:notice] = "Your booking is successful."
+                 flash[:color]= "valid"
+               else
+                 flash[:notice] = "You cannot booking in #{booking_params[:booking_date_start]} range."
+                 flash[:color]= "invalid"
+               end
+        
     end
     redirect_to book_bookings_path(@book)
   end
