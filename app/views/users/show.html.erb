@@ -37,7 +37,7 @@
                                     </table>
                                 </div>
                                 <form>
-                                <%= link_to 'Edit', edit_user_path(@user) , class:"btn btn-warning" %>
+                                <%= link_to 'Edit', edit_user_path(@user) , class:"btn btn-warning", method: :get %>
                                 <input class="btn btn-info" Type="button" VALUE="Back" onClick="history.go(-1);return true;"></input></form>
 
                     </div>

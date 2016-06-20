@@ -1,114 +1,189 @@
-  <div class="panel panel-default">
+<div class="panel panel-default">
     <div class="panel-body">
-    	<br>Today <%= Time.now.strftime("%Y-%m-%d") %>
+    	<h3><strong> Detail</strong></h3>
+        Today <strong><%= Time.now.strftime("%Y-%m-%d") %></strong> 
     	<br>
-    	<br><%= @user.user_ic %>
-    	<br><%= @user.user_name %>
-    	<br><%= @user.user_email %>
-    	<br><%= @user.user_level %>
-    	<br><%= @user.user_address %>
-    	<br><%= @user.user_contact %>
-    	<br><%= @user.user_contact %>
-    	<br>
-    	//////////////////////////////////////////////////////////////
-    	BOOKING
-    	<table class="table">
-    	<% @booking.each do |booking| %>
-    	<tr>
-    	<td>booking date : <%= booking.booking_date_start %></td>
-    	<td>end date : <%= booking.booking_date_end %></td>
-    	</tr>
-    	<tr>
-    	<td>
-    	<% @book = Book.where(["id LIKE ?","#{booking.book_id}"]) %>
-    	<% @book.each do |book| %>
-    	    
-    	      <br>ISBN : <%= book.book_isbn %>
-    	      <br>Title : <%= book.book_title %>
-    	      <br>Author : <%= book.book_author %>
-    	      <br>Status : <%= book.book_status %>
-    	      <br>Edition : <%= book.book_edition %>
-    	      <br>Image : <%= book.book_image %>
-    	    
-    	<% end %>  
-    	<br><%= link_to 'borrow', librarians_borrow_path(@user.id,booking_id: "#{booking.id}")%>
-    	</td>
-    	<td></td>
-    	</tr>
-    	<% end %>
-    	</table>
-    	/////////////////////////////////////////////////////////////
-    	BORROW
-    	<table class="table">
-    	<% @borrow.each do |booking| %>
-    	<tr>
-    	<td>borrow date : <%= booking.booking_date_start %></td>
-    	<td>end date : <%= booking.booking_date_end %></td>
-    	</tr>
-    	<tr>
-    	<td>
-    	<% @book = Book.where(["id LIKE ?","#{booking.book_id}"]) %>
-    	<% @book.each do |book| %>
-    	    
-    	      <br>ISBN : <%= book.book_isbn %>
-    	      <br>Title : <%= book.book_title %>
-    	      <br>Author : <%= book.book_author %>
-    	      <br>Status : <%= book.book_status %>
-    	      <br>Edition : <%= book.book_edition %>
-    	      <br>Image : <%= book.book_image %>
-    	    
-    	<% end %>  
-    	<br><%= link_to 'return', librarians_return_path(@user.id,booking_id: "#{booking.id}")%>
-    	</td>
-    	<td></td>
-    	</tr>
-    	<% end %>
-    	</table>
-    	/////////////////////////////////////////////////////////////
-    	Fines
-    	<% @return.each do |booking| %>
-    	<table class="table">
-    	<% @fine = Fine.find_by(fines_status: "notpay", booking_id: "#{booking.id}") %>
-    	<% if "#{@fine}".present?%>
-    		<tr>
-    		<td>borrow date : <%= booking.booking_date_start %></td>
-    		<td>end date : <%= booking.booking_date_end %></td>
-    		<td>return date : <%= booking.booking_date_return %></td>
-    		</tr>
-    		<tr>
-    		<% 
-    			sql = "SELECT datediff('#{booking.booking_date_return}','#{booking.booking_date_end}' ) AS DAY;"
-    		    checkDate = ActiveRecord::Base.connection.select_value(sql) 
-    		    %>
-    		<td>Late <%= "#{checkDate}"%> day * RM 0.5</td>
-    		<td>Total RM <%= "#{@fine.fines_amount}"%></td>
-    		</tr>
-    		<tr>
-    		<td>
-    		<% @book = Book.where(["id LIKE ?","#{booking.book_id}"]) %>
-    		<% @book.each do |book| %>
-    		    
-    		      <br>ISBN : <%= book.book_isbn %>
-    		      <br>Title : <%= book.book_title %>
-    		      <br>Author : <%= book.book_author %>
-    		      <br>Status : <%= book.book_status %>
-    		      <br>Edition : <%= book.book_edition %>
-    		      <br>Image : <%= book.book_image %>
-    		    
-    		<% end %>  
-    		<br><%= link_to 'pay', librarians_pay_path(@user.id,booking_id: "#{booking.id}") ,
-    						method: :pay,
-    	                    data: { confirm: 'Do payment?' }%>
-    		</td>
-    		<td></td>
-    		</tr>
-
-    	<%else%>
-    	<%end%>
-
-    	</table>
-    	<% end %>
-    	<br>
-    
+        <table>
+            <tr>
+                <td align="right"><strong>IC : </strong></td> 
+                <td><%= @user.user_ic %></td> 
+            </tr>
+            <tr>
+                <td align="right"><strong>Name : </strong></td> 
+                <td><%= @user.user_name %></td> 
+            </tr>
+            <tr>
+                <td align="right"><strong>Email : </strong></td> 
+                <td><%= @user.user_email %></td> 
+            </tr>
+            <tr>
+                <td align="right"><strong>Level : </strong></td> 
+                <td><%= @user.user_level %></td> 
+            </tr>
+            <tr>
+                <td align="right"><strong>Address : </strong></td> 
+                <td><%= @user.user_address %></td> 
+            </tr>
+            <tr>
+                <td align="right"><strong>Contact : </strong></td> 
+                <td><%= @user.user_contact %></td> 
+            </tr>
+        </table>
     </div>
-  </div>
+</div>
+<div class="panel panel-info">
+    <div class="panel-heading">
+    <h4><strong>BOOKING</strong></h4>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+        <% @booking.each do |booking| %>
+        <tr>
+        <td>booking date : <%= booking.booking_date_start %></td>
+        <td>end date : <%= booking.booking_date_end %></td>
+        </tr>
+        <tr>
+        <td colspan="2">
+        <% @book = Book.where(["id LIKE ?","#{booking.book_id}"]) %>
+        <% @book.each do |book| %>
+            
+            <table border="0" style="width:100%">
+                <tr>
+                    <th rowspan="6"><%= image_tag book.book_image.medium.url %>
+                </tr>
+                <tr>
+                    <td>ISBN : <%= book.book_isbn %></td>
+                </tr>
+                <tr>
+                    <td>Title : <%= book.book_title %></td>
+                </tr>
+                <tr>
+                    <td>Author : <%= book.book_author %></td>
+                </tr>
+                <tr>
+                    <td>Status : <%= book.book_status %></td>
+                </tr>
+                <tr>
+                    <td>Edition : <%= book.book_edition %></td>
+                </tr>
+            </table>                        
+            
+        <% end %>  
+        <br><%= link_to 'Borrow', librarians_borrow_path(@user.id,booking_id: "#{booking.id}"), class: "btn btn-danger"%>
+        </td>
+        
+        </tr>
+        <% end %>
+        </table>
+    </div>
+</div>
+<div class="panel panel-warning">
+    <div class="panel-heading">
+    <h4><strong>BORROW</strong></h4>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+        <% @borrow.each do |booking| %>
+        <tr>
+        <td>borrow date : <%= booking.booking_date_start %></td>
+        <td>end date : <%= booking.booking_date_end %></td>
+        </tr>
+        <tr>
+        <td colspan="2">
+        <% @book = Book.where(["id LIKE ?","#{booking.book_id}"]) %>
+        <% @book.each do |book| %>
+            
+            <table border="0" style="width:100%">
+                <tr>
+                    <th rowspan="6"><%= image_tag book.book_image.medium.url %>
+                </tr>
+                <tr>
+                    <td>ISBN : <%= book.book_isbn %></td>
+                </tr>
+                <tr>
+                    <td>Title : <%= book.book_title %></td>
+                </tr>
+                <tr>
+                    <td>Author : <%= book.book_author %></td>
+                </tr>
+                <tr>
+                    <td>Status : <%= book.book_status %></td>
+                </tr>
+                <tr>
+                    <td>Edition : <%= book.book_edition %></td>
+                </tr>
+            </table>
+        <% end %>  
+        <br><%= link_to 'return', librarians_return_path(@user.id,booking_id: "#{booking.id}"), class: "btn btn-primary"%>
+        </td>
+        
+        </tr>
+        <% end %>
+        </table>
+    </div>
+</div>
+<div class="panel panel-danger">
+    <div class="panel-heading">
+    <h4><strong>FINES</strong></h4>
+    </div>
+    <div class="panel-body">
+        <% @return.each do |booking| %>
+        <table class="table">
+        <% @fine = Fine.find_by(fines_status: "notpay", booking_id: "#{booking.id}") %>
+        <% if "#{@fine}".present?%>
+            <tr>
+            <td>borrow date : <%= booking.booking_date_start %></td>
+            <td>end date : <%= booking.booking_date_end %></td>
+            <td>return date : <%= booking.booking_date_return %></td>
+            </tr>
+            <tr>
+            <% 
+                sql = "SELECT datediff('#{booking.booking_date_return}','#{booking.booking_date_end}' ) AS DAY;"
+                checkDate = ActiveRecord::Base.connection.select_value(sql) 
+                %>
+            <td>Late <%= "#{checkDate}"%> day * RM 0.5</td>
+            <td>Total RM <%= "#{@fine.fines_amount}"%></td>
+            <td></td> 
+            </tr>
+            <tr>
+            <td colspan="3">
+            <% @book = Book.where(["id LIKE ?","#{booking.book_id}"]) %>
+            <% @book.each do |book| %>
+                
+                <table border="0" style="width:100%">
+                    <tr>
+                        <th rowspan="6"><%= image_tag book.book_image.medium.url %>
+                    </tr>
+                    <tr>
+                        <td>ISBN : <%= book.book_isbn %></td>
+                    </tr>
+                    <tr>
+                        <td>Title : <%= book.book_title %></td>
+                    </tr>
+                    <tr>
+                        <td>Author : <%= book.book_author %></td>
+                    </tr>
+                    <tr>
+                        <td>Status : <%= book.book_status %></td>
+                    </tr>
+                    <tr>
+                        <td>Edition : <%= book.book_edition %></td>
+                    </tr>
+                </table>
+                
+            <% end %>  
+            <br><%= link_to 'pay', librarians_pay_path(@user.id,booking_id: "#{booking.id}") ,
+                            method: :pay,
+                            data: { confirm: 'Do payment?' }, class: "btn btn-primary"%>
+            </td>
+            
+            </tr>
+
+        <%else%>
+        <%end%>
+
+        </table>
+        <% end %>
+    </div>
+</div>
+    

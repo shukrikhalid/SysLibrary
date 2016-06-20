@@ -33,24 +33,24 @@ $(document).ready(function() {
 });
 </script>
 
-
-<%= form_for @user do |f| %>
-  <div class="alert alert-danger">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@user.errors.count, "error") %> prohibited
-        this user from being saved:
-      </h2>
-      <ul>
-        <% @user.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-    </div>
-  <% end %>
+  <%= form_for @user,html: { id: "identicalForm", class: "form-horizontal"} do |f| %>
+   
+    <% if @user.errors.any? %>
+        <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <div id="error_explanation">
+        <h2>
+          <%= pluralize(@user.errors.count, "error") %> prohibited
+          this user from being saved:
+        </h2>
+        <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+        </div>
+    <% end %>
 
 
 
@@ -97,14 +97,6 @@ $(document).ready(function() {
                                        <div class="col-lg-8">
                                        <%= f.text_field :password_confirmation, name: 'user[password_confirmation]' , class: "form-control", required: "required", type:"password" %>
                               <p class="help-block"></p></div>
-                          </div>
-                          <div class="form-group">
-                          <div class="col-lg-3">
-                              <label>User Type</label></div>
-                              <div class="col-lg-8">
-                              <%= f.select(:user_level, options_for_select(["student","staff"]), {}, {class: "form-control", required: "required"}) %>
-                              <p class="help-block"></p>
-                              </div>
                           </div>
 
                           <div class="form-group">

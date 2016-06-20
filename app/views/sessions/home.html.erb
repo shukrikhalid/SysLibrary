@@ -1,7 +1,7 @@
   <div class="panel panel-default">
     <div class="panel-body">
     <h2> Home <h2>
-     <%= link_to 'View Book' , books_path(@books), class:"btn btn-danger" %><br>
-     <%= link_to "View Profile", user_path(@current_user), class:"btn btn-info"%>
+     <%= link_to 'View Book' , books_path(@books), class:"btn btn-danger" , method: :get%><br>
+     <%= link_to "View Profile", user_path(@current_user), class:"btn btn-info" , method: :get%>
     </div>
   </div>

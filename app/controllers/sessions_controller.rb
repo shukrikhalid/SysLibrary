@@ -29,8 +29,30 @@ class SessionsController < ApplicationController
 		authorized_user = User.authenticate(params[:user_email],params[:password])
 		if authorized_user
 			session[:user_id] = authorized_user.id
-			flash[:notice] = "Wow Welcome again, you logged in as #{authorized_user.user_name}"
-			flash[:color]= "valid"
+			@current_user = User.find session[:user_id]
+			current_date = Time.now.strftime("%Y-%m-%d") 
+			
+			@bookingC = Booking.where(["booking_date_start < ? and status LIKE ?","#{current_date}","booking"])
+			@bookingC.each do |b|
+				b.update(status: "cancel")
+			end
+			out = "t"
+			date = ""
+			@bookingC = Booking.where(["status LIKE ?","cancel"])
+			@bookingC.each do |b|
+				if "#{b.user_id}".eql? "#{@current_user.id}" 
+					out = "f"
+					date = "#{b.booking_date_start}"
+					b.destroy
+				end
+			end
+			if "#{out}".eql? "f"	
+				flash[:notice] = "Your booking at #{date} has been cancelled" 
+				flash[:color]= "invalid"
+			else 
+				flash[:notice] = "Wow Welcome again, you logged in as #{authorized_user.user_name}"
+				flash[:color]= "valid"
+			end
 			redirect_to(:action => 'home')
 
 

@@ -28,24 +28,25 @@ class LibrariansController < ApplicationController
               AND bookings.status LIKE 'borrow'"
         checkR = ActiveRecord::Base.connection.execute(sql2)
         countR = checkR.count
-    if countR > 0
-          flash[:notice] = "Invalid. Sorry this book not been return yet."
-          flash[:color]= "invalid"
-          redirect_to librarian_path(@user)
-    else
-          if "#{booking.booking_date_start}".eql? current_date
-          flash[:notice] = "Borrow Success."
-          flash[:color]= "valid"
-          if booking.update(status: "borrow")
-              redirect_to librarian_path(@user)
-          else
-              render 'show'
-          end
-          else
-          flash[:notice] = "Invalid. This booking for #{booking.booking_date_start}."
+    if "#{booking.booking_date_start}".eql? current_date
+        if countR > 0
+            flash[:notice] = "Invalid. Sorry this book not been return yet and for you booking has been canceled"
             flash[:color]= "invalid"
-          redirect_to librarian_path(@user)
-          end
+            booking.destroy
+            redirect_to librarian_path(@user)
+        else
+            flash[:notice] = "Borrow Success."
+            flash[:color]= "valid"
+                if booking.update(status: "borrow")
+                    redirect_to librarian_path(@user)
+                else
+                    render 'show'
+                end
+        end
+    else
+        flash[:notice] = "Invalid. This booking for #{booking.booking_date_start}."
+        flash[:color]= "invalid"
+        redirect_to librarian_path(@user)
     end
 
     
