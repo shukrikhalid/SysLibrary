@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
+  get 'add_librarian/index'
+
+  get 'add_librarian/show'
+
+  get 'add_librarian/add'
+
+  get 'add_librarian/remove'
+
   get 'homepage/main'
 
   get 'librarians/index'
   get 'librarians/borrow'
   get 'librarians/return'
   get 'librarians/pay'
+  get 'librarians/cancel'
 
   get 'sessions/home'
 
@@ -24,7 +33,7 @@ Rails.application.routes.draw do
 
   get 'bookings/index'
 
-
+  resources :add_librarian
   resources :sessions
   resources :librarians 
     resources :books do
@@ -34,6 +43,7 @@ Rails.application.routes.draw do
     resources :users do
       resources :bookings
     end
+  
   
   
   root 'sessions#login'

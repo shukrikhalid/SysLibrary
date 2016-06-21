@@ -19,7 +19,9 @@ class BookingsController < ApplicationController
     sql = "SELECT *
               FROM bookings
               WHERE bookings.book_id = '#{@book.id}'
-              AND bookings.status LIKE 'booking'"
+              AND bookings.status LIKE 'booking'
+              AND bookings.user_id LIKE '#{@current_user.id}'
+              "
         checkB = ActiveRecord::Base.connection.execute(sql)
         countB = checkB.count
 

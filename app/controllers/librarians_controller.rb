@@ -91,5 +91,20 @@ class LibrariansController < ApplicationController
 
 	redirect_to librarian_path(@user)
   end
+  def cancel
+    @current_user = User.find session[:user_id]
+    @user = User.find(params[:format])
+    current_date = Time.now.strftime("%Y-%m-%d")
+    
+    booking = Booking.find_by(id: params[:booking_id],user_id: "#{@user.id}", status: "booking")
+    book = Book.find_by(id: "#{booking.book_id}")
+    
+
+    flash[:notice] = "Booking canceled for date #{booking.booking_date_start}and Book Title is #{book.book_title}."
+    flash[:color]= "valid"
+      
+    booking.destroy
+    redirect_to sessions_home_path(@user)
+  end
 
 end

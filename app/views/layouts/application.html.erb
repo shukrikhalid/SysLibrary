@@ -54,7 +54,7 @@ body {
 
 </style>
 <head>
-  <title>Library</title>
+  <title>e-Library</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -65,7 +65,7 @@ body {
 	 <nav class="navbar navbar-inverse" >
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#">Library</a>
+	      <a class="navbar-brand" href="#">e-Library</a>
 	    </div>
 	    <ul class="nav navbar-nav">
 	      <%unless session[:user_id]%>
@@ -94,11 +94,12 @@ body {
 		<h2><span class="label label-default">Librarian</span></h2>
 		<table class="table">
 		<tr><td>
-			<%= link_to 'Library Management' , librarians_index_path, class: "btn btn-info btn-block" , method: :get%>
+			<%= link_to 'Booking Management' , librarians_path, class: "btn btn-info btn-block" , method: :get%>
 			<%unless session[:user_id]%>
 			<%else%>
 			<% if "#{@current_user.user_level}".eql?"staff librarian"%>
 			<%= link_to 'User Management' , users_path, class: "btn btn-warning btn-block" , method: :get%>
+			<%= link_to 'Librarian Management ' , add_librarian_index_path, class: "btn btn-success btn-block" , method: :get%>
 			<%end%>
 			<%end%>
 			
@@ -117,7 +118,7 @@ body {
 	
 	<%end%>
 
-	<div class="panel panel-default" style="background: rgba(122, 130, 136, 0.5)!important;">
+	<div class="container" style="width: 100%; background: rgba(122, 130, 136, 0.3)!important;">
 
 		<% if flash[:color]== "valid" %>
 			<div class="alert alert-success">

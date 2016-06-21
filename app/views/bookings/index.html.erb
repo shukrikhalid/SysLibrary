@@ -22,23 +22,38 @@
 	}
 
 </style>
-  <div class="panel panel-default">
-    <div class="panel-body">
+  <div class="panel panel-info">
+    <div class="panel-heading">
 		<h1>Bookings</h1>
 	</div>
   </div>
-		<%= link_to 'Add booking', new_book_booking_path(@book), class:"btn btn-success" , method: :get%>
-		<div class="row" >
-		<div class="col-lg-6">
-			<div class="panel panel-primary">
-				<div class="panel-body">
-		<div id='calendar' ></div>
-				</div>
+  <%= link_to 'Add booking', new_book_booking_path(@book), class:"btn btn-success" , method: :get%>
+<div class="row" >
+	<div class="col-lg-6">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<div id='calendar' ></div>
 			</div>
 		</div>
-		</div>		
-		
-		<form><input class="btn btn-info" Type="button" VALUE="Back" onClick="history.go(-1);return true;"></input></form>
+	</div>
+	<div class="col-lg-6">
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<table border="0" style="width:100%">
+					    <tr>
+					        <th rowspan="6"><%= image_tag @book.book_image.medium.url %>
+					    </tr>
+					    <tr><td>ISBN : <%= @book.book_isbn %></td></tr>
+					    <tr><td>Title : <%= @book.book_title %></td></tr>
+					    <tr><td>Author : <%= @book.book_author %></td></tr>
+					    <tr><td>Status : <%= @book.book_status %></td></tr>
+					    <tr><td>Edition : <%= @book.book_edition %></td></tr>
+					</table>
+				</div>
+			</div>
+	</div>
+</div>
+<%= link_to 'Back' , books_path(@books), class:"btn btn-info" , method: :get%><br>
     
     
 
@@ -75,7 +90,7 @@
 		            		{	
 		            		    title  : '<%= bookingC.status %>',
 		            		    start  : '<%= bookingC.booking_date_start %>',
-		            		    end    : '<%= bookingC.booking_date_end %>',
+		            		    end    : '<%= bookingC.booking_date_return %>',
 		            			color  : '#00cc00'
 		            		},
 		            	<%end%>
