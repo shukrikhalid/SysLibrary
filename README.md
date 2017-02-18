@@ -1,16 +1,13 @@
 # README
+Ruby <tt>2.3.0</tt>
+
+Rails <tt>4.2.6</tt>
+
 need install
 
 ``` ruby
 sudo apt-get install imagemagick
 ```
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
-
-
-
 
 
 
